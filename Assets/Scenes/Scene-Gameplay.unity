@@ -164,7 +164,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_LocalPosition.x
@@ -327,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49999952
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_LocalPosition.z
@@ -376,7 +376,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_LocalPosition.x
@@ -418,6 +418,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5260534257359234607, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d59dae685ad836d4eb0f73b146961895, type: 2}
+    - target: {fileID: 8461035096475621755, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
+      propertyPath: activeSelection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8628741454744912920, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_Name
       value: Cube
@@ -433,7 +441,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2751783039462723052, guid: d8f2b120ea05d2a4e86c7aa3139dd475, type: 3}
       propertyPath: m_LocalPosition.x
@@ -705,3 +713,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allCubes: []
   exclusiveCubeSelection: 0
+  movementSpeed: 68.5
