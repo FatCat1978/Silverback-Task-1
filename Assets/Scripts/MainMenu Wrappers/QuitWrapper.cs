@@ -14,7 +14,9 @@ public class QuitWrapper : MonoBehaviour
 	{
 		print("Quitting game.");
 		Application.Quit(); //as far as I know, only works inside a compiled exe.
+#if UNITY_EDITOR
 		EditorApplication.ExecuteMenuItem("Edit/Play"); //for the editor, then.
+#endif
 	}
 
 }
