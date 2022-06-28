@@ -9,12 +9,12 @@ public class QuitWrapper : MonoBehaviour
   //in a full game/application, I would make this do sanity checks to make sure everything is saved properly, but for this..
   //no need!
 
-    //still public for the button
-    public void StartGameQuit()
-    {
-        print("Quitting game.");
-        Application.Quit(); //as far as I know, only works inside a compiled exe.
-        EditorApplication.ExecuteMenuItem("Edit/Play"); //for the editor, then.
-    }
+	//still public for the button
+	public void StartGameQuit()
+	{
+		print("Quitting game.");
+		Application.Quit(); //as far as I know, only works inside a compiled exe.
+		EditorApplication.ExecuteMenuItem("Edit/Play"); //for the editor, then.
+	}
 
 }
