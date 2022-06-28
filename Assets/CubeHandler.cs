@@ -30,7 +30,7 @@ public class CubeHandler : MonoBehaviour
 
 	}
 
-	private void SetMaterialToActiveState()
+	public void SetMaterialToActiveState() //also used by cubecontroller when we're clicked.
 	{
 		if(activeSelection)
 			Renderer.material = selectedMaterial;

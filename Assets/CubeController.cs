@@ -12,6 +12,8 @@ public class CubeController : MonoBehaviour
 	[SerializeField] bool exclusiveCubeSelection = false; //false by default though
 
 
+	[Range(0, 100)] //as a baseline. negative speed would be possible but unintuitive, feel free to get rid of this if you want to mess around with it.
+	[SerializeField] float movementSpeed;	
 
     private void Start() //called once!
     {
@@ -41,28 +43,63 @@ public class CubeController : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
-		if (Input.GetMouseButtonDown(0)) //if we're clicking
+		//Raytracing - for toggling individual cubes on a per-click basis.
+		if (Input.GetMouseButtonDown(0)) //if we're clicking, we use this to toggle.
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //make a ray, cast it out
 			RaycastHit hit;
 			// Casts the ray and get the first game object hit
 			Physics.Raycast(ray, out hit);
-
-			GameObject foundObject = hit.rigidbody.gameObject;
-
-			Debug.Log("This hit" + foundObject.name);
+			GameObject foundObject = null;
+			if (hit.rigidbody != null)
+				foundObject = hit.rigidbody.gameObject;
+						
 			if (foundObject != null) //sanity check
             {
-				if(allCubes.Contains(foundObject))
+				Debug.Log("This hit: " + foundObject.name);
+				if (allCubes.Contains(foundObject))
                 {
+					//if the cube we're selecting is inactive, make sure every other cube is inactive first!
+					CubeHandler CH = foundObject.GetComponent<CubeHandler>();
+					if (CH.activeSelection == false && exclusiveCubeSelection)
+					{
+						ToggleAllIn(activeCubes);
+					}
 					ToggleCubeActivation(foundObject);
                 }
             }
 		}
+
+		//keyboard input: M - toggles all to on.
+		if(Input.GetKeyDown(KeyCode.M))
+        {
+			print("Toggling all cubes to \"Active\". ");
+			ToggleAllIn(inactiveCubes);
+        }
+
+		//the rest of the inputs use getAxisRaw. Cube Movement time!
+		float HorizontalAxisPos = Input.GetAxisRaw("Horizontal");
+		float VerticalAxisPos = Input.GetAxisRaw("Vertical"); //this should probably work with controllers, too, now that I think about it.
+
+		Vector3 MoveVect = new Vector3(HorizontalAxisPos, 0, VerticalAxisPos);
+		MoveVect = MoveVect.normalized * movementSpeed * Time.deltaTime; //basic Vector stuff, move it in the dir of the axis based on the speed var. Deltatime prevents it from pissing off at mach speeds.
+
+		foreach (GameObject cube in activeCubes) //only move the active ones.
+        {
+			Rigidbody toMove = cube.GetComponent<Rigidbody>(); //not a fan of doing getComponent in a loop like this potentially every frame, I could probably cache these but there's an extent where the extra complexity isn't worth.
+			toMove.MovePosition(cube.transform.position + MoveVect);
+        }
+
 	}
 
 	void ToggleCubeActivation(GameObject toToggleCube)
     {
+		CubeHandler CH = toToggleCube.GetComponent<CubeHandler>(); //there has to be a better way of doing this, but I don't know it.
+																   //I do know that getComponent's pretty expensive. this isn't an every frame thing, though, so it's probably not that bad.
+
+		CH.activeSelection = !CH.activeSelection; //invert it's active state
+		CH.SetMaterialToActiveState(); //and refresh the material so it looks right.
+
 
 		if(inactiveCubes.Contains(toToggleCube))
         { //we can only activate it if it's active!
@@ -79,13 +116,19 @@ public class CubeController : MonoBehaviour
 				return; //done here too.
             }
         }
-
 		//sanity checking.
-		print("Warning! GameObject " + toToggleCube.name + " is in neither inactive cubes, or active cubes! somehow!");
-		
-		
+		print("Warning! GameObject " + toToggleCube.name + " is in neither inactive cubes, or active cubes!");
 
     }
+
+	private void ToggleAllIn(List<GameObject> toToggle) //a little janky. not a fan of this.
+    {
+		foreach(GameObject cube in new List<GameObject>(toToggle))
+        {
+			ToggleCubeActivation(cube);
+        }
+    }
+
 
 
 }
